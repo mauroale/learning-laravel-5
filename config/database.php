@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -49,6 +49,7 @@ return [
         'sqlite' => [
             'driver'   => 'sqlite',
             'database' => storage_path('database.sqlite'),
+            'unix_socket' => '/etc/php5/apache2/conf.d/20-pdo_sqlite.ini',
             'prefix'   => '',
         ],
 
