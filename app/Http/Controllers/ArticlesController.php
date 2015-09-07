@@ -9,6 +9,8 @@ use App\Http\Requests\ArticlesRequest;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Request;
+use App\Http\Auth\AuthController;
+
 
 
 class ArticlesController extends Controller
@@ -46,7 +48,15 @@ class ArticlesController extends Controller
 		//Articles::create( Request::all() );
 
     	// utilizando validacao por Request
-		Articles::create( $request->all() );
+		//Articles::create( $request->all() );
+
+
+
+        // Salvando o user id utilizando Eloquent Relationships
+
+        $article = new Articles( $request->all() );
+        \Auth::user()->articles()->save( $article );
+
 		return redirect('articles');
 
     }

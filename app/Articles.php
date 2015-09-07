@@ -10,6 +10,8 @@ class Articles extends Model
     			'title',
     			'body',
     			'published_at',
+                
+                'user_id'
     ];
 
 
@@ -34,6 +36,15 @@ class Articles extends Model
 	{
 		$query->where('published_at' , '>' , Carbon::now() );
 	}
+
+
+
+    // Um artigo pertence a um usuário
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
 
 }
