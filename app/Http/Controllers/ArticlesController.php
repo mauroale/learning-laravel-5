@@ -15,6 +15,14 @@ use App\Http\Auth\AuthController;
 
 class ArticlesController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth' , ['except' => ['index' , 'show'] ] );
+    }
+
+
     public function index()
     {
     	// sem scope
