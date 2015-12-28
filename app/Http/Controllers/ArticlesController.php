@@ -32,9 +32,8 @@ class ArticlesController extends Controller
     	return view('articles/index' , compact('articles', $articles) );
     }
 
-    public function show($id)
+    public function show(articles $article)
     {
-    	$article = Articles::findOrFail($id);
         	
 
     	return  view('articles/show' , compact( 'article' ));
@@ -62,8 +61,18 @@ class ArticlesController extends Controller
 
         // Salvando o user id utilizando Eloquent Relationships
 
-        $article = new Articles( $request->all() );
-        \Auth::user()->articles()->save( $article );
+        //$article = new Articles( $request->all() );
+        //\Auth::user()->articles()->save( $article );
+
+        // Salvando o article usando a relação do Eloquent diretamente
+
+        \Auth::user()->articles()->create( $request->all() );
+
+        // 
+        //\Session::flash('flash_message', 'Artigo criado com sucesso!');
+        session()->flash('flash_message', 'Artigo criado com sucesso!');
+        session()->flash('flash_message_important', true);
+
 
 		return redirect('articles');
 
