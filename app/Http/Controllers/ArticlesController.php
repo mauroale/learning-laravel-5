@@ -27,9 +27,12 @@ class ArticlesController extends Controller
     {
     	// sem scope
     	//$articles = Articles::latest('published_at')->where('published_at', '<=' , Carbon::now() )->get();
-    	//com scope
+    	
+        //com scope
     	$articles = Articles::latest('published_at')->published()->get();
-    	return view('articles/index' , compact('articles', $articles) );
+    	
+        return view('articles/index' , compact('articles', 'latest') );
+
     }
 
     public function show(articles $article)
