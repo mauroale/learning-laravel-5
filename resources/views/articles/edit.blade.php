@@ -7,7 +7,7 @@
 	
 	{!! Form::model($article,  [ 'method' => 'PATCH',  'url' => 'articles/' . $article->id ]  ) !!}
 	
-			@include('articles/parcials/form' , ['submitButtonText' => 'Update Article'])
+		@include('articles/parcials/form' , ['submitButtonText' => 'Update Article'])
 
 	{!! Form::close() !!}
 	

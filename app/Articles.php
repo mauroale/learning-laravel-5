@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon; 
 class Articles extends Model
 {
+
+    
     protected $fillable = [
     			'title',
     			'body',
@@ -44,6 +46,16 @@ class Articles extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    public function getTagListAttribute()
+    {
+        return $this->tags->lists('id');
     }
 
 

@@ -6,7 +6,8 @@
 	<hr>
 
 	{!! Form::open( [  'url' => 'articles'  ]  ) !!}
-				@include('articles/parcials/form' , ['submitButtonText' => 'Add Article'])
+			
+		@include('articles/parcials/form' , ['submitButtonText' => 'Add Article'])
 
 
 	{!! Form::close() !!}

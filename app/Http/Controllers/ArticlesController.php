@@ -42,7 +42,8 @@ class ArticlesController extends Controller
 
     public function create()
     {
-    	return view('articles/create');
+        $tags = \App\Tag::lists('name' , 'id');
+    	return view('articles/create', compact('tags'));
     }
 
     public function store(ArticlesRequest $request)
@@ -66,7 +67,8 @@ class ArticlesController extends Controller
 
         // Salvando o article usando a relação do Eloquent diretamente
 
-        \Auth::user()->articles()->create( $request->all() );
+        $article = \Auth::user()->articles()->create( $request->all() );
+        $article->tags()->attach( $request->input('tag_list') );
 
         // 
         //\Session::flash('flash_message', 'Artigo criado com sucesso!');
@@ -79,10 +81,13 @@ class ArticlesController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(articles $article)
     {
-    	$article = Articles::findOrFail($id);    	
-    	return view('articles/edit', compact('article') );
+        // antes de usar a tecnica de Route Model Binding
+    	//$article = Articles::findOrFail($id);    
+        $tags = \App\Tag::lists('name' , 'id');	
+
+    	return view('articles/edit', compact('article' , 'tags') );
     }
 
     public function update($id , ArticlesRequest $request )
