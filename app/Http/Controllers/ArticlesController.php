@@ -34,8 +34,6 @@ class ArticlesController extends Controller
 
     public function show(articles $article)
     {
-        	
-
     	return  view('articles/show' , compact( 'article' ));
     }
 
@@ -62,13 +60,18 @@ class ArticlesController extends Controller
 
         // Salvando o user id utilizando Eloquent Relationships
 
-        //$article = new Articles( $request->all() );
-        //\Auth::user()->articles()->save( $article );
+        //  $article = new Articles( $request->all() );
+        //  \Auth::user()->articles()->save( $article );
 
         // Salvando o article usando a relação do Eloquent diretamente
 
-        $article = \Auth::user()->articles()->create( $request->all() );
-        $article->tags()->attach( $request->input('tag_list') );
+        //$article = \Auth::user()->articles()->create( $request->all() );
+        
+        //$this->syncTags( $article , $request->input('tag_list') );
+
+
+        // Juntando as instruções anteriores para melhorar o código
+        $this->createArticle($request);
 
         // 
         //\Session::flash('flash_message', 'Artigo criado com sucesso!');
@@ -90,12 +93,28 @@ class ArticlesController extends Controller
     	return view('articles/edit', compact('article' , 'tags') );
     }
 
-    public function update($id , ArticlesRequest $request )
+    public function update(ArticlesRequest $request , Article $article )
     {	
 
-    	$article = Articles::findOrFail($id);    	
     	$article->update( $request->all() );
 
+        $this->syncTags( $article , $request->input('tag_list') );
+
     	return redirect('articles');
+    }
+
+    private function syncTags(Article $article , array $tags )
+    {
+       $article->tags()->sync( $tags );
+
+    }
+
+    private function createArticle( ArticleRequest $request )
+    {
+        // Salvando o article usando a relação do Eloquent diretamente
+        $article = \Auth::user()->articles()->create( $request->all() );
+        $this->syncTags( $article , $request->input('tag_list') );
+
+        return $article;
     }
 }
