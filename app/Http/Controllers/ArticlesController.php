@@ -103,13 +103,13 @@ class ArticlesController extends Controller
     	return redirect('articles');
     }
 
-    private function syncTags(Article $article , array $tags )
+    private function syncTags(articles $article , array $tags )
     {
        $article->tags()->sync( $tags );
 
     }
 
-    private function createArticle( ArticleRequest $request )
+    private function createArticle( ArticlesRequest $request )
     {
         // Salvando o article usando a relação do Eloquent diretamente
         $article = \Auth::user()->articles()->create( $request->all() );
